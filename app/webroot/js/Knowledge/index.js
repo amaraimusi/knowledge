@@ -17,7 +17,7 @@ var pwms; // ProcessWithMultiSelection.js | 一覧のチェックボックス複
  * - 数値範囲系の検索入力フォームに数値範囲入力スライダーを組み込む
  * 
  * @version 1.2
- * @date 2015-9-16 | 2016-12-14
+ * @date 2018-5-10
  * @author k-uehara
  */
 function init(){
@@ -45,9 +45,9 @@ function init(){
 	
 	// CBBXS-1023
 	// カテゴリリストJSON
-	var kl_category_id_json = jQuery('#kl_category_id_json').val();
-	var klCategoryIdList = JSON.parse(kl_category_id_json);
-	disFilData['kl_category_id'] ={'fil_type':'select','option':{'list':klCategoryIdList}};
+	var kl_category_json = jQuery('#kl_category_json').val();
+	var klCategoryList = JSON.parse(kl_category_json);
+	disFilData['kl_category'] ={'fil_type':'select','option':{'list':klCategoryList}};
 
 	// CBBXE
 

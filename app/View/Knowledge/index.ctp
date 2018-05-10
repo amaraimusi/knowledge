@@ -3,6 +3,7 @@ $this->CrudBase->setModelName('Knowledge');
 
 // CSSファイルのインクルード
 $cssList = $this->CrudBase->getCssList();
+$cssList[] = 'Knowledge/index'; // 当画面専用CSS
 $this->assign('css', $this->Html->css($cssList));
 
 // JSファイルのインクルード
@@ -36,6 +37,7 @@ $this->assign('script', $this->Html->script($jsList,array('charset'=>'utf-8')));
 	<a href="<?php echo $home_url; ?>" class="btn btn-info" title="この画面を最初に表示したときの状態に戻します。（検索状態、列並べの状態を初期状態に戻します。）">
 		<span class="glyphicon glyphicon-certificate"  ></span></a>
 	<?php $this->CrudBase->newBtn();// 新規入力ボタンを作成 ?>
+	<a href="kl_category" class="btn btn-primary btn-sm" >心得カテゴリー</a>
 </div>
 <div style="clear:both"></div>
 
@@ -52,8 +54,7 @@ $this->assign('script', $this->Html->script($jsList,array('charset'=>'utf-8')));
 		$this->CrudBase->inputKjId($kjs);
 		$this->CrudBase->inputKjText($kjs,'kj_kl_text','心得テキスト');
 		$this->CrudBase->inputKjText($kjs,'kj_xid','XID');
-		$this->CrudBase->inputKjSelect($kjs,'kj_kl_category_id','ネコ種別',$klCategoryIdList); 
-		$this->CrudBase->inputKjText($kjs,'kj_category_code','カテゴリコード');
+		$this->CrudBase->inputKjSelect($kjs,'kj_kl_category','ネコ種別',$klCategoryList); 
 		$this->CrudBase->inputKjText($kjs,'kj_contents_url','内容URL');
 		$this->CrudBase->inputKjText($kjs,'kj_doc_name','文献名');
 		$this->CrudBase->inputKjText($kjs,'kj_doc_text','文献テキスト');
@@ -120,8 +121,7 @@ foreach($data as $i=>$ent){
 	$this->CrudBase->tdId($ent,'id',array('checkbox_name'=>'pwms'));
 	$this->CrudBase->tdNote($ent,'kl_text');
 	$this->CrudBase->tdStr($ent,'xid');
-	$this->CrudBase->tdList($ent,'kl_category_id',$klCategoryIdList);
-	$this->CrudBase->tdStr($ent,'category_code');
+	$this->CrudBase->tdList($ent,'kl_category',$klCategoryList);
 	$this->CrudBase->tdStr($ent,'contents_url');
 	$this->CrudBase->tdStr($ent,'doc_name');
 	$this->CrudBase->tdNote($ent,'doc_text');
@@ -179,27 +179,21 @@ foreach($data as $i=>$ent){
     	<input type="hidden" name="form_type">
     	<input type="hidden" name="row_index">
     	<input type="hidden" name="sort_no">
+    	<input type="hidden" name="xid" value='' >
+    	<input type="hidden" name="dtm" value='' >
+    	<input type="hidden" name="level" value=0 >
 	</div>
 	<table><tbody>
 
 		<!-- CBBXS-1006 -->
 		<tr><td>心得テキスト： </td><td>
-			<textarea name="kl_text"  cols="30" rows="4" maxlength="0" title="0文字以内で入力してください"></textarea>
+			<textarea name="kl_text" title="0文字以内で入力してください"></textarea>
 			<label class="text-danger" for="kl_text"></label>
-		</td></tr>
-		<tr><td>XID: </td><td>
-			<input type="text" name="xid" class="valid" value=""  maxlength="32" title="32文字以内で入力してください" />
-			<label class="text-danger" for="xid"></label>
 		</td></tr>
 
 		<tr><td>カテゴリ: </td><td>
-			<?php $this->CrudBase->selectX('kl_category_id',null,$klCategoryIdList,null);?>
-			<label class="text-danger" for="kl_category_id"></label>
-		</td></tr>
-
-		<tr><td>カテゴリコード: </td><td>
-			<input type="text" name="category_code" class="valid" value=""  maxlength="16" title="16文字以内で入力してください" />
-			<label class="text-danger" for="category_code"></label>
+			<?php $this->CrudBase->selectX('kl_category',null,$klCategoryList,null);?>
+			<label class="text-danger" for="kl_category"></label>
 		</td></tr>
 
 		<tr><td>内容URL: </td><td>
@@ -213,16 +207,8 @@ foreach($data as $i=>$ent){
 		</td></tr>
 
 		<tr><td>文献テキスト： </td><td>
-			<textarea name="doc_text"  cols="30" rows="4" maxlength="0" title="0文字以内で入力してください"></textarea>
+			<textarea name="doc_text" title="0文字以内で入力してください"></textarea>
 			<label class="text-danger" for="doc_text"></label>
-		</td></tr>
-		<tr><td>学習日時: </td><td>
-			<input type="text" name="dtm" class="valid" value=""  pattern="([0-9]{4})(/|-)([0-9]{1,2})(/|-)([0-9]{1,2}) d{2}:d{2}:d{2}" title="日時形式（Y-m-d H:i:s）で入力してください(例：2012-12-12 12:12:12)" />
-			<label class="text-danger" for="dtm"></label>
-		</td></tr>
-		<tr><td>学習レベル: </td><td>
-			<input type="text" name="level" class="valid" value=""  pattern="^[+-]?([0-9]*[.])?[0-9]+$" maxlength="11" title="数値を入力してください" />
-			<label class="text-danger" for="level"></label>
 		</td></tr>
 
 		<!-- CBBXE -->
@@ -269,13 +255,8 @@ foreach($data as $i=>$ent){
 		</td></tr>
 
 		<tr><td>カテゴリ: </td><td>
-			<?php $this->CrudBase->selectX('kl_category_id',null,$klCategoryIdList,null);?>
-			<label class="text-danger" for="kl_category_id"></label>
-		</td></tr>
-
-		<tr><td>カテゴリコード: </td><td>
-			<input type="text" name="category_code" class="valid" value=""  maxlength="16" title="16文字以内で入力してください" />
-			<label class="text-danger" for="category_code"></label>
+			<?php $this->CrudBase->selectX('kl_category',null,$klCategoryList,null);?>
+			<label class="text-danger" for="kl_category"></label>
 		</td></tr>
 
 		<tr><td>内容URL: </td><td>
@@ -432,7 +413,7 @@ foreach($data as $i=>$ent){
 <div style="display:none">
 	
 	<!-- CBBXS-1022 -->
-	<input id="kl_category_id_json" type="hidden" value='<?php echo $kl_category_id_json; ?>' />
+	<input id="kl_category_json" type="hidden" value='<?php echo $kl_category_json; ?>' />
 
 	<!-- CBBXE -->
 </div>

@@ -565,32 +565,32 @@ class KlCategoryController extends CrudBaseController {
 			'sort_no'=>array(
 					'name'=>'順番',
 					'row_order'=>'KlCategory.sort_no',
-					'clm_show'=>1,
+					'clm_show'=>0,
 			),
 			'delete_flg'=>array(
 					'name'=>'削除フラグ',
 					'row_order'=>'KlCategory.delete_flg',
-					'clm_show'=>1,
+					'clm_show'=>0,
 			),
 			'update_user'=>array(
 					'name'=>'更新ユーザー',
 					'row_order'=>'KlCategory.update_user',
-					'clm_show'=>1,
+					'clm_show'=>0,
 			),
 			'ip_addr'=>array(
 					'name'=>'IPアドレス',
 					'row_order'=>'KlCategory.ip_addr',
-					'clm_show'=>1,
+					'clm_show'=>0,
 			),
 			'created'=>array(
 					'name'=>'生成日時',
 					'row_order'=>'KlCategory.created',
-					'clm_show'=>1,
+					'clm_show'=>0,
 			),
 			'modified'=>array(
 					'name'=>'更新日時',
 					'row_order'=>'KlCategory.modified',
-					'clm_show'=>1,
+					'clm_show'=>0,
 			),
 
 			// CBBXE

@@ -166,11 +166,8 @@ class Knowledge extends AppModel {
 		if(!empty($kjs['kj_xid'])){
 			$cnds[]="Knowledge.xid LIKE '%{$kjs['kj_xid']}%'";
 		}
-		if(!empty($kjs['kj_kl_category_id']) || $kjs['kj_kl_category_id'] ==='0' || $kjs['kj_kl_category_id'] ===0){
-			$cnds[]="Knowledge.kl_category_id = {$kjs['kj_kl_category_id']}";
-		}
-		if(!empty($kjs['kj_category_code'])){
-			$cnds[]="Knowledge.category_code LIKE '%{$kjs['kj_category_code']}%'";
+		if(!empty($kjs['kj_kl_category']) || $kjs['kj_kl_category'] ==='0' || $kjs['kj_kl_category'] ===0){
+			$cnds[]="Knowledge.kl_category = {$kjs['kj_kl_category']}";
 		}
 		if(!empty($kjs['kj_contents_url'])){
 			$cnds[]="Knowledge.contents_url LIKE '%{$kjs['kj_contents_url']}%'";
@@ -301,12 +298,12 @@ class Knowledge extends AppModel {
 	/**
 	 * カテゴリリストをDBから取得する
 	 */
-	public function getKlCategoryIdList(){
-		if(empty($this->KlCategoryId)){
-			App::uses('KlCategoryId','Model');
-			$this->KlCategoryId=ClassRegistry::init('KlCategoryId');
+	public function getKlCategoryList(){
+		if(empty($this->KlCategory)){
+			App::uses('KlCategory','Model');
+			$this->KlCategory=ClassRegistry::init('KlCategory');
 		}
-		$fields=array('id','kl_category_id_name');//SELECT情報
+		$fields=array('id','kl_category_name');//SELECT情報
 		$conditions=array("delete_flg = 0");//WHERE情報
 		$order=array('sort_no');//ORDER情報
 		$option=array(
@@ -315,11 +312,11 @@ class Knowledge extends AppModel {
 				'order'=>$order,
 		);
 
-		$data=$this->KlCategoryId->find('all',$option); // DBから取得
+		$data=$this->KlCategory->find('all',$option); // DBから取得
 		
 		// 構造変換
 		if(!empty($data)){
-			$data = Hash::combine($data, '{n}.KlCategoryId.id','{n}.KlCategoryId.kl_category_id_name');
+			$data = Hash::combine($data, '{n}.KlCategory.id','{n}.KlCategory.kl_category_name');
 		}
 		
 		return $data;

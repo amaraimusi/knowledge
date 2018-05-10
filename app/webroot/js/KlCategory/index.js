@@ -17,7 +17,7 @@ var pwms; // ProcessWithMultiSelection.js | 一覧のチェックボックス複
  * - 数値範囲系の検索入力フォームに数値範囲入力スライダーを組み込む
  * 
  * @version 1.2
- * @date 2015-9-16 | 2016-12-14
+ * @date 2018-5-10
  * @author k-uehara
  */
 function init(){
@@ -30,7 +30,7 @@ function init(){
 	crudBase = new CrudBase({
 			'src_code':'kl_category', // 画面コード（スネーク記法)
 			'kjs':kjs,
-			'ni_tr_place':1,
+			'ni_tr_place':0,
 		});
 	
 

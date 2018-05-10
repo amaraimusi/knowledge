@@ -78,9 +78,9 @@ class KnowledgeController extends CrudBaseController {
 		// CBBXS-1020
 
 		// カテゴリリスト
-		$klCategoryIdList = $this->Knowledge->getKlCategoryIdList();
-		$kl_category_id_json = json_encode($klCategoryIdList,JSON_HEX_TAG | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_HEX_APOS);
-		$this->set(array('klCategoryIdList' => $klCategoryIdList,'kl_category_id_json' => $kl_category_id_json));
+		$klCategoryList = $this->Knowledge->getKlCategoryList();
+		$kl_category_json = json_encode($klCategoryList,JSON_HEX_TAG | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_HEX_APOS);
+		$this->set(array('klCategoryList' => $klCategoryList,'kl_category_json' => $kl_category_json));
 
 		// CBBXE
 		
@@ -463,8 +463,7 @@ class KnowledgeController extends CrudBaseController {
 			array('name'=>'kj_id','def'=>null),
 			array('name'=>'kj_kl_text','def'=>null),
 			array('name'=>'kj_xid','def'=>null),
-			array('name'=>'kj_kl_category_id','def'=>null),
-			array('name'=>'kj_category_code','def'=>null),
+			array('name'=>'kj_kl_category','def'=>null),
 			array('name'=>'kj_contents_url','def'=>null),
 			array('name'=>'kj_doc_name','def'=>null),
 			array('name'=>'kj_doc_text','def'=>null),
@@ -513,17 +512,10 @@ class KnowledgeController extends CrudBaseController {
 								'allowEmpty' => true
 						),
 				),
-				'kj_kl_category_id' => array(
+				'kj_kl_category' => array(
 						'custom'=>array(
 								'rule' => array( 'custom', '/^[-]?[0-9] ?$/' ),
 								'message' => 'カテゴリは整数を入力してください。',
-								'allowEmpty' => true
-						),
-				),
-				'kj_category_code'=> array(
-						'maxLength'=>array(
-								'rule' => array('maxLength', 255),
-								'message' => 'カテゴリコードは16文字以内で入力してください',
 								'allowEmpty' => true
 						),
 				),
@@ -629,22 +621,17 @@ class KnowledgeController extends CrudBaseController {
 			'xid'=>array(
 					'name'=>'XID',
 					'row_order'=>'Knowledge.xid',
-					'clm_show'=>1,
+					'clm_show'=>0,
 			),
-			'kl_category_id'=>array(
+			'kl_category'=>array(
 					'name'=>'カテゴリ',
-					'row_order'=>'Knowledge.kl_category_id',
-					'clm_show'=>1,
-			),
-			'category_code'=>array(
-					'name'=>'カテゴリコード',
-					'row_order'=>'Knowledge.category_code',
+					'row_order'=>'Knowledge.kl_category',
 					'clm_show'=>1,
 			),
 			'contents_url'=>array(
 					'name'=>'内容URL',
 					'row_order'=>'Knowledge.contents_url',
-					'clm_show'=>1,
+					'clm_show'=>0,
 			),
 			'doc_name'=>array(
 					'name'=>'文献名',
@@ -654,12 +641,12 @@ class KnowledgeController extends CrudBaseController {
 			'doc_text'=>array(
 					'name'=>'文献テキスト',
 					'row_order'=>'Knowledge.doc_text',
-					'clm_show'=>1,
+					'clm_show'=>0,
 			),
 			'dtm'=>array(
 					'name'=>'学習日時',
 					'row_order'=>'Knowledge.dtm',
-					'clm_show'=>1,
+					'clm_show'=>0,
 			),
 			'level'=>array(
 					'name'=>'学習レベル',
@@ -669,32 +656,32 @@ class KnowledgeController extends CrudBaseController {
 			'sort_no'=>array(
 					'name'=>'順番',
 					'row_order'=>'Knowledge.sort_no',
-					'clm_show'=>1,
+					'clm_show'=>0,
 			),
 			'delete_flg'=>array(
 					'name'=>'削除フラグ',
 					'row_order'=>'Knowledge.delete_flg',
-					'clm_show'=>1,
+					'clm_show'=>0,
 			),
 			'update_user'=>array(
 					'name'=>'更新ユーザー',
 					'row_order'=>'Knowledge.update_user',
-					'clm_show'=>1,
+					'clm_show'=>0,
 			),
 			'ip_addr'=>array(
 					'name'=>'IPアドレス',
 					'row_order'=>'Knowledge.ip_addr',
-					'clm_show'=>1,
+					'clm_show'=>0,
 			),
 			'created'=>array(
 					'name'=>'生成日時',
 					'row_order'=>'Knowledge.created',
-					'clm_show'=>1,
+					'clm_show'=>0,
 			),
 			'modified'=>array(
 					'name'=>'更新日時',
 					'row_order'=>'Knowledge.modified',
-					'clm_show'=>1,
+					'clm_show'=>0,
 			),
 
 			// CBBXE
